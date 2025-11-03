@@ -4,7 +4,7 @@ import MainLayout from "../layout";
 import Home from "../pages/home";
 
 function PrivateOutlet() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("xyz_to_ken");
 
   if (!token) {
     return <Navigate to="/login" replace />;

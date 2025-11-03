@@ -1,28 +1,47 @@
-export type Sale = {
-  _id: string;
-  saleId: string;
-  model: string;
-  client: string;
-  totalAmount: number;
-  prepayment: number;
-  createdDate: string;
-  startDate: string;
-  endDate: string;
-  status: "Активный" | "Завершен" | "Ожидание" | "Отменен";
+export type SaleItem = {
+  payment_amount: number;
+  payment_schedualed_pay_day: string;
+  payment_paid_amount: number;
+  payment_status: "full-paid" | "partly-paid" | "not-paid";
+  payment_completed_date: string;
 };
 
 export type ClientType = {
-  _id: string;
-  first_name: string;
-  last_name: string;
-  phone_number: string;
+  _id?: string;
+  client_name: string;
+  client_surname: string;
+  client_phone_number: string;
 };
 
-export type SaleItem = {
-  id: string;
-  name: string;
-  total: number;
-  prepayment: number;
-  startDate: string;
-  endDate: string;
+export type OrderType = {
+  _id: string;
+  order_generated_id: string;
+  order_created_date: string;
+  order_assigned_client: ClientType;
+  order_products: {
+    product_name: string;
+    product_added_date: string;
+    product_full_amount: number;
+    product_pre_paid_amount: number;
+    product_payment_period_start_date: string;
+    product_payment_period_end_date: string;
+    payment_graphics: SaleItem[];
+  }[];
+  order_status: "process" | "finished" | "canceled";
 };
+
+export interface AssignClientDto {
+  client_id: string;
+}
+
+export interface AddProductDto {
+  product_name: string;
+  product_full_amount: number;
+  product_pre_paid_amount?: number;
+  product_payment_period_start_date: string; // ISO format
+  product_payment_period_end_date: string; // ISO format
+}
+
+export interface AddPaymentDto {
+  amount: number;
+}
